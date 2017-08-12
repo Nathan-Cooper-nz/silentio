@@ -29,8 +29,9 @@ function getCafes(){
               //tableRow.insertCell(-1).appendChild(document.createTextNode(name));
 			  
 			  innerDiv.innerHTML = name;
+			  
 			  var resultDiv = document.createElement('div');
-			  innerDiv.className = 'resultDiv';
+			  resultDiv.className = 'resultDiv';
               var listNearby = document.createElement('ul');
 			  
               //var right = tableRow.insertCell(-1).appendChild(listNearby);
