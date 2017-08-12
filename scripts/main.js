@@ -1,26 +1,52 @@
 const BASE_REQUEST_URL = 'https://maps.googleapis.com/maps/api/place/' +
-                         'nearbysearch/json?' + 
+                         'nearbysearch/json?' +
 	                 'key=***REMOVED***&';
 $(document).ready(function() {
 
 
-	
+
 });
 
 function getCafes(){
     var location = '-41.3064632,174.7749782';
-	$.ajax({
-        url: BASE_REQUEST_URL + 'location=' + location 
-                              + '&radius=5000&type=cafe',
-        error: error('ajax fucked up'),
-        data: 'json',
-        success: function(data){
-            //do the things
-            console.log(data);
-        },
-        type: 'GET'
+	$.get(BASE_REQUEST_URL + 'location=' + location
+                              + '&radius=5000&type=cafe', function (data) {
+	    var totallyLegitTableTM = $('table');
+        data.results.forEach(function(item) {
+            var name = item.name;
+            var lat = item.geometry.location.lat;
+            var long = item.geometry.location.lng;
+            $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=100', function(surroundingPlaces){
+              var tableRow = document.createElement('tr');
+              // $(tableRow).append($('td').text(name));
+              tableRow.insertCell(-1).appendChild(document.createTextNode(name));
+              var listNearby = document.createElement('ul');
+              var right = tableRow.insertCell(-1).appendChild(listNearby);
+              surroundingPlaces.results.forEach(function (it){
+                // listNearby.appendChild(document.createElement('li').appendChild(document.createTextNode(it.name)))
+                var point = document.createElement('li');
+                point.innerHTML=it.name;
+                listNearby.appendChild(point);
+              })
+              $('#table').append(tableRow);
+                // if(surroundingPlaces.results !== undefined) {
+                //     surroundingPlaces.results.forEach(function (i2) {
+                //         rightHandTable.append('<tr><td>' + i2.name + '</td></tr>');
+                //     });
+                // }
+                // totallyLegitTableTM.append($('tr')
+                //     .append($('td').append(item.name))
+                //     .append($('td').append(rightHandTable)
+                //     )
+                // );
+                // $('#results').append(totallyLegitTableTM);
+                // alert('look!');
+            });
 
-	});
+        });
+    });
+
+
 }
 
 function error(msg){
