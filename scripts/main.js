@@ -30,8 +30,6 @@ function getCafes(){
               innerDiv.className = 'card';
 
               var newDiv = document.createElement('div');
-              newDiv.className = 'card-content';
-              newDiv.innerHTML =  `<span class="card-title">${name}</span>`;
               var resultDiv = document.createElement('div');
               resultDiv.className = 'resultDiv';
 
@@ -49,17 +47,14 @@ function getCafes(){
                   locationsNearBy.add(it.name);
                 }
               })
-              innerDiv.innerHTML = name + '</br> Results(' + (locationsNearBy.size-2) + ')';
+              newDiv.className = 'card-content';
+              newDiv.innerHTML =  `<span class="card-title">${name} (${locationsNearBy.size - 2})</span>`;
 
               innerDiv.appendChild(newDiv);
                 newDiv.appendChild(resultDiv);
               $('#results').append(innerDiv);
             });
         });
-        //
-        // $.when.apply($, ajaxRequests).then(function(){
-        //
-        // })
     });
 
 
