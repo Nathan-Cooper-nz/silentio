@@ -11,7 +11,8 @@ function getCafes(){
     var location = '-41.3064632,174.7749782';
 	$.get(BASE_REQUEST_URL + 'location=' + location
                               + '&radius=5000&type=cafe', function (data) {
-	    var totallyLegitTableTM = $('table');
+	    //var totallyLegitTableTM = $('table'); //TOCMMENT
+		//var outerDiv = document.getElementByID("results");
         data.results.forEach(function(item) {
             var name = item.name;
             var lat = item.geometry.location.lat;
@@ -20,11 +21,21 @@ function getCafes(){
             var locationsNearBy = new Set();
             locationsNearBy.add(name);
             $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=100', function(surroundingPlaces){
-              var tableRow = document.createElement('tr');
+              //var tableRow = document.createElement('tr');
+			  var innerDiv = document.createElement('div');
+			  //dont need atm //iDiv.id = 'innerDiv';
+			  innerDiv.className = 'innerDiv';
               // $(tableRow).append($('td').text(name));
-              tableRow.insertCell(-1).appendChild(document.createTextNode(name));
+              //tableRow.insertCell(-1).appendChild(document.createTextNode(name));
+			  
+			  innerDiv.innerHTML = name;
+			  var resultDiv = document.createElement('div');
+			  innerDiv.className = 'resultDiv';
               var listNearby = document.createElement('ul');
-              var right = tableRow.insertCell(-1).appendChild(listNearby);
+			  
+              //var right = tableRow.insertCell(-1).appendChild(listNearby);
+			  resultDiv.append(listNearby);
+			  
               surroundingPlaces.results.forEach(function (it){
                 if(!locationsNearBy.has(it.name)){
                   var point = document.createElement('li');
@@ -34,7 +45,8 @@ function getCafes(){
                 }
                 // listNearby.appendChild(document.createElement('li').appendChild(document.createTextNode(it.name)))
               })
-              $('#table').append(tableRow);
+			  innerDiv.append(resultDiv);
+              $('#results').append(innerDiv);
                 // if(surroundingPlaces.results !== undefined) {
                 //     surroundingPlaces.results.forEach(function (i2) {
                 //         rightHandTable.append('<tr><td>' + i2.name + '</td></tr>');
