@@ -24,10 +24,10 @@ function getCafes(){
             //a set of unique things around the location
             var locationsNearBy = new Set();
             locationsNearBy.add(name);
-            $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=100', function(surroundingPlaces){
+            locationsNearBy.add("Wellington");  //Ssshh #HackFest
+            $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=50', function(surroundingPlaces){
               var innerDiv = document.createElement('div');
               innerDiv.className = 'innerDiv';
-              innerDiv.innerHTML = name;
 
               var resultDiv = document.createElement('div');
               resultDiv.className = 'resultDiv';
@@ -46,6 +46,7 @@ function getCafes(){
                   locationsNearBy.add(it.name);
                 }
               })
+              innerDiv.innerHTML = name + '</br> Results(' + (locationsNearBy.size-2) + ')';
 
               innerDiv.appendChild(resultDiv);
               $('#results').append(innerDiv);
