@@ -49,19 +49,6 @@ function getCafes(){
 
 			  innerDiv.appendChild(resultDiv);
               $('#results').append(innerDiv);
-
-                // if(surroundingPlaces.results !== undefined) {
-                //     surroundingPlaces.results.forEach(function (i2) {
-                //         rightHandTable.append('<tr><td>' + i2.name + '</td></tr>');
-                //     });
-                // }
-                // totallyLegitTableTM.append($('tr')
-                //     .append($('td').append(item.name))
-                //     .append($('td').append(rightHandTable)
-                //     )
-                // );
-                // $('#results').append(totallyLegitTableTM);
-                // alert('look!');
             });
         });
         //
