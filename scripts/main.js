@@ -24,29 +24,44 @@ function getCafes(){
             //a set of unique things around the location
             var locationsNearBy = new Set();
             locationsNearBy.add(name);
-            //create an ajax request and add it to the array
-            $.get(BASE_REQUEST_URL + 'location='+ lat + ','
-                            + long + '&radius=100', function(surroundingPlaces){
-              var tableRow = document.createElement('tr');
-              tableRow.insertCell(-1).appendChild(document.createTextNode(name));
+            $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=100', function(surroundingPlaces){
+			  var innerDiv = document.createElement('div');
+			  innerDiv.className = 'innerDiv';
+			  innerDiv.innerHTML = name;
 
-              //creates an unorded list of surrounding things
-              var listNearby = document.createElement('ul');
+			  var resultDiv = document.createElement('div');
+			  resultDiv.className = 'resultDiv';
 
-              var right = tableRow.insertCell(-1).appendChild(listNearby);
-
-              //Add surroundingPlaces
               surroundingPlaces.results.forEach(function (it){
                 //if we havent seen a similar name before
                 if(!locationsNearBy.has(it.name)){
+				  var singleResultDiv = document.createElement('div');
+				  singleResultDiv.className = 'singleResultDiv';
+				  var listNearby = document.createElement('ul');
                   var point = document.createElement('li');
                   point.innerHTML=it.name;
                   listNearby.appendChild(point);
+				  singleResultDiv.appendChild(listNearby);
+				  resultDiv.appendChild(singleResultDiv);
                   locationsNearBy.add(it.name);
                 }
               })
-              // itemsToAdd.set(name, {size: locationsNearBy.size-1, row: tableRow});
-              $('#table').append(tableRow);
+
+			  innerDiv.appendChild(resultDiv);
+              $('#results').append(innerDiv);
+
+                // if(surroundingPlaces.results !== undefined) {
+                //     surroundingPlaces.results.forEach(function (i2) {
+                //         rightHandTable.append('<tr><td>' + i2.name + '</td></tr>');
+                //     });
+                // }
+                // totallyLegitTableTM.append($('tr')
+                //     .append($('td').append(item.name))
+                //     .append($('td').append(rightHandTable)
+                //     )
+                // );
+                // $('#results').append(totallyLegitTableTM);
+                // alert('look!');
             });
         });
         //
