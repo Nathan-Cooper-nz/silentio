@@ -18,7 +18,7 @@ function getCafes(){
 
             var locationsNearBy = new Set();
             locationsNearBy.add(name);
-            $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=100', function(surroundingPlaces){
+            $.get(BASE_REQUEST_URL + 'locatio='+ lat + ',' + long + '&radius=100', function(surroundingPlaces){
 			  var innerDiv = document.createElement('div');
 			  innerDiv.className = 'innerDiv';
 			  innerDiv.innerHTML = name;
