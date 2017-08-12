@@ -25,20 +25,23 @@ function getCafes(){
 			  
 			  var resultDiv = document.createElement('div');
 			  resultDiv.className = 'resultDiv';
-              var listNearby = document.createElement('ul');
-			  
-			  resultDiv.append(listNearby);
-			  
+			  			  
               surroundingPlaces.results.forEach(function (it){
                 if(!locationsNearBy.has(it.name)){
+				  var singleResultDiv = document.createElement('div');
+				  singleResultDiv.className = 'singleResultDiv';
+				  var listNearby = document.createElement('ul');
                   var point = document.createElement('li');
                   point.innerHTML=it.name;
                   listNearby.appendChild(point);
+				  singleResultDiv.append(listNearby);
+				  resultDiv.append(singleResultDiv);
                   locationsNearBy.add(it.name);
                 }
               })
 			  innerDiv.append(resultDiv);
               $('#results').append(innerDiv);
+			  
                 // if(surroundingPlaces.results !== undefined) {
                 //     surroundingPlaces.results.forEach(function (i2) {
                 //         rightHandTable.append('<tr><td>' + i2.name + '</td></tr>');
