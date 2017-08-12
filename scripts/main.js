@@ -11,8 +11,6 @@ function getCafes(){
     var location = '-41.3064632,174.7749782';
 	$.get(BASE_REQUEST_URL + 'location=' + location
                               + '&radius=5000&type=cafe', function (data) {
-	    //var totallyLegitTableTM = $('table'); //TOCMMENT
-		//var outerDiv = document.getElementByID("results");
         data.results.forEach(function(item) {
             var name = item.name;
             var lat = item.geometry.location.lat;
@@ -21,20 +19,14 @@ function getCafes(){
             var locationsNearBy = new Set();
             locationsNearBy.add(name);
             $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=100', function(surroundingPlaces){
-              //var tableRow = document.createElement('tr');
 			  var innerDiv = document.createElement('div');
-			  //dont need atm //iDiv.id = 'innerDiv';
 			  innerDiv.className = 'innerDiv';
-              // $(tableRow).append($('td').text(name));
-              //tableRow.insertCell(-1).appendChild(document.createTextNode(name));
-			  
 			  innerDiv.innerHTML = name;
 			  
 			  var resultDiv = document.createElement('div');
 			  resultDiv.className = 'resultDiv';
               var listNearby = document.createElement('ul');
 			  
-              //var right = tableRow.insertCell(-1).appendChild(listNearby);
 			  resultDiv.append(listNearby);
 			  
               surroundingPlaces.results.forEach(function (it){
@@ -44,7 +36,6 @@ function getCafes(){
                   listNearby.appendChild(point);
                   locationsNearBy.add(it.name);
                 }
-                // listNearby.appendChild(document.createElement('li').appendChild(document.createTextNode(it.name)))
               })
 			  innerDiv.append(resultDiv);
               $('#results').append(innerDiv);
