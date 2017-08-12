@@ -26,9 +26,11 @@ function getCafes(){
             locationsNearBy.add(name);
             $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=100', function(surroundingPlaces){
               var innerDiv = document.createElement('div');
-              innerDiv.className = 'innerDiv';
-              innerDiv.innerHTML = name;
+              innerDiv.className = 'card';
 
+              var newDiv = document.createElement('div');
+              newDiv.className = 'card-content';
+              newDiv.innerHTML =  `<span class="card-title">${name}</span>`;
               var resultDiv = document.createElement('div');
               resultDiv.className = 'resultDiv';
 
@@ -47,7 +49,8 @@ function getCafes(){
                 }
               })
 
-              innerDiv.appendChild(resultDiv);
+              innerDiv.appendChild(newDiv);
+                newDiv.appendChild(resultDiv);
               $('#results').append(innerDiv);
             });
         });
