@@ -1,10 +1,10 @@
 const BASE_REQUEST_URL = 'https://maps.googleapis.com/maps/api/place/' +
-                         'nearbysearch/json?' + 
+                         'nearbysearch/json?' +
 	                 'key=***REMOVED***&';
 $(document).ready(function() {
+  getCafes();
 
 
-	
 });
 
 function getCafes(){
@@ -13,28 +13,45 @@ function getCafes(){
                               + '&radius=5000&type=cafe', function (data) {
 	    var totallyLegitTableTM = $('table');
         data.results.forEach(function(item) {
-            //DO MAGIC
-            var rightHandTable = $('table');
+            var name = item.name;
             var lat = item.geometry.location.lat;
             var long = item.geometry.location.lng;
-            $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=300', function(surroundingPlaces){
-                if(surroundingPlaces.results !== undefined) {
-                    surroundingPlaces.results.forEach(function (i2) {
-                        rightHandTable.append('<tr><td>' + i2.name + '</td></tr>');
-                    });
+
+            var locationsNearBy = new Set();
+            locationsNearBy.add(name);
+            $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=100', function(surroundingPlaces){
+              var tableRow = document.createElement('tr');
+              // $(tableRow).append($('td').text(name));
+              tableRow.insertCell(-1).appendChild(document.createTextNode(name));
+              var listNearby = document.createElement('ul');
+              var right = tableRow.insertCell(-1).appendChild(listNearby);
+              surroundingPlaces.results.forEach(function (it){
+                if(!locationsNearBy.has(it.name)){
+                  var point = document.createElement('li');
+                  point.innerHTML=it.name;
+                  listNearby.appendChild(point);
+                  locationsNearBy.add(it.name);
                 }
-                totallyLegitTableTM.append($('tr')
-                    .append($('td').append(item.name))
-                    .append($('td').append(rightHandTable)
-                    )
-                );
-                $('#results').append(totallyLegitTableTM);
-                alert('look!');
+                // listNearby.appendChild(document.createElement('li').appendChild(document.createTextNode(it.name)))
+              })
+              $('#table').append(tableRow);
+                // if(surroundingPlaces.results !== undefined) {
+                //     surroundingPlaces.results.forEach(function (i2) {
+                //         rightHandTable.append('<tr><td>' + i2.name + '</td></tr>');
+                //     });
+                // }
+                // totallyLegitTableTM.append($('tr')
+                //     .append($('td').append(item.name))
+                //     .append($('td').append(rightHandTable)
+                //     )
+                // );
+                // $('#results').append(totallyLegitTableTM);
+                // alert('look!');
             });
 
         });
     });
-	
+
 
 }
 
