@@ -27,8 +27,11 @@ function getCafes(){
             locationsNearBy.add("Wellington");  //Ssshh #HackFest
             $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=50', function(surroundingPlaces){
               var innerDiv = document.createElement('div');
-              innerDiv.className = 'innerDiv';
+              innerDiv.className = 'card';
 
+              var newDiv = document.createElement('div');
+              newDiv.className = 'card-content';
+              newDiv.innerHTML =  `<span class="card-title">${name}</span>`;
               var resultDiv = document.createElement('div');
               resultDiv.className = 'resultDiv';
 
@@ -48,7 +51,8 @@ function getCafes(){
               })
               innerDiv.innerHTML = name + '</br> Results(' + (locationsNearBy.size-2) + ')';
 
-              innerDiv.appendChild(resultDiv);
+              innerDiv.appendChild(newDiv);
+                newDiv.appendChild(resultDiv);
               $('#results').append(innerDiv);
             });
         });
