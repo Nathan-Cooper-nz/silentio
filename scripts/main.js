@@ -2,7 +2,7 @@ const BASE_REQUEST_URL = 'https://maps.googleapis.com/maps/api/place/' +
                          'nearbysearch/json?' +
 	                 'key=***REMOVED***&';
 $(document).ready(function() {
-
+  getCafes();
 
 
 });
@@ -16,6 +16,9 @@ function getCafes(){
             var name = item.name;
             var lat = item.geometry.location.lat;
             var long = item.geometry.location.lng;
+
+            var locationsNearBy = new Set();
+            locationsNearBy.add(name);
             $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=100', function(surroundingPlaces){
               var tableRow = document.createElement('tr');
               // $(tableRow).append($('td').text(name));
@@ -23,10 +26,13 @@ function getCafes(){
               var listNearby = document.createElement('ul');
               var right = tableRow.insertCell(-1).appendChild(listNearby);
               surroundingPlaces.results.forEach(function (it){
+                if(!locationsNearBy.has(it.name)){
+                  var point = document.createElement('li');
+                  point.innerHTML=it.name;
+                  listNearby.appendChild(point);
+                  locationsNearBy.add(it.name);
+                }
                 // listNearby.appendChild(document.createElement('li').appendChild(document.createTextNode(it.name)))
-                var point = document.createElement('li');
-                point.innerHTML=it.name;
-                listNearby.appendChild(point);
               })
               $('#table').append(tableRow);
                 // if(surroundingPlaces.results !== undefined) {
