@@ -1,6 +1,6 @@
 const BASE_REQUEST_URL = 'https://maps.googleapis.com/maps/api/place/' +
                          'nearbysearch/json?' +
-	                 'key=***REMOVED***&';
+                     'key=***REMOVED***&';
 $(document).ready(function() {
   getCafes();
 
@@ -9,7 +9,7 @@ $(document).ready(function() {
 
 function getCafes(){
     var location = '-41.3064632,174.7749782';
-	$.get(BASE_REQUEST_URL + 'location=' + location
+    $.get(BASE_REQUEST_URL + 'location=' + location
                               + '&rankby=distance&type=cafe', function (data) {
         //array of the ajax requests to later use with a .when statement
         var ajaxRequests = new Array();
@@ -25,29 +25,29 @@ function getCafes(){
             var locationsNearBy = new Set();
             locationsNearBy.add(name);
             $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=100', function(surroundingPlaces){
-			  var innerDiv = document.createElement('div');
-			  innerDiv.className = 'innerDiv';
-			  innerDiv.innerHTML = name;
+              var innerDiv = document.createElement('div');
+              innerDiv.className = 'innerDiv';
+              innerDiv.innerHTML = name;
 
-			  var resultDiv = document.createElement('div');
-			  resultDiv.className = 'resultDiv';
+              var resultDiv = document.createElement('div');
+              resultDiv.className = 'resultDiv';
 
               surroundingPlaces.results.forEach(function (it){
                 //if we havent seen a similar name before
                 if(!locationsNearBy.has(it.name)){
-				  var singleResultDiv = document.createElement('div');
-				  singleResultDiv.className = 'singleResultDiv';
-				  var listNearby = document.createElement('ul');
+                  var singleResultDiv = document.createElement('div');
+                  singleResultDiv.className = 'singleResultDiv';
+                  var listNearby = document.createElement('ul');
                   var point = document.createElement('li');
                   point.innerHTML=it.name;
                   listNearby.appendChild(point);
-				  singleResultDiv.appendChild(listNearby);
-				  resultDiv.appendChild(singleResultDiv);
+                  singleResultDiv.appendChild(listNearby);
+                  resultDiv.appendChild(singleResultDiv);
                   locationsNearBy.add(it.name);
                 }
               })
 
-			  innerDiv.appendChild(resultDiv);
+              innerDiv.appendChild(resultDiv);
               $('#results').append(innerDiv);
             });
         });
