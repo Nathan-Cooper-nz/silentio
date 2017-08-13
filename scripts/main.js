@@ -1,6 +1,6 @@
 const BASE_REQUEST_URL = 'https://maps.googleapis.com/maps/api/place/' +
                          'nearbysearch/json?' +
-                     'key=***REMOVED***&';
+                     'key=AIzaSyB64sdars7nT-bBo6fMCFrQfU-NpzC2XUo&';
 var map;
 
 var iconBase = 'http://localhost:8000/icons/';
