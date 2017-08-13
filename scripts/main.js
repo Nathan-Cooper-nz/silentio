@@ -10,7 +10,6 @@ var iconMarker = iconBase + 'marker.png';
 $(document).ready(function() {
   // getCafes();
 
-
 });
 
 function getCafes(){
@@ -38,7 +37,7 @@ function getCafes(){
 
               var newDiv = document.createElement('div');
               var resultDiv = document.createElement('div');
-              resultDiv.className = 'resultDiv';
+              resultDiv.className = 'resultDiv blu';
 
               surroundingPlaces.results.forEach(function (it){
                 //if we havent seen a similar name before
