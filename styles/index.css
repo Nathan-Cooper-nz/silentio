@@ -16,3 +16,8 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
+div#map {
+  height:80vh;
+  width:100%;
+}

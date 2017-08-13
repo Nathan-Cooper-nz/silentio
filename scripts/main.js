@@ -1,14 +1,21 @@
 const BASE_REQUEST_URL = 'https://maps.googleapis.com/maps/api/place/' +
                          'nearbysearch/json?' +
                      'key=***REMOVED***&';
+var map;
+
+var iconBase = 'http://localhost:8000/icons/';
+var iconCoffee = iconBase + 'coffee.png';
+var iconMarker = iconBase + 'marker.png';
+
 $(document).ready(function() {
-  getCafes();
+  // getCafes();
 
 
 });
 
 function getCafes(){
     var location = '-41.3064632,174.7749782';
+    console.log(map);
     $.get(BASE_REQUEST_URL + 'location=' + location
                               + '&rankby=distance&type=cafe', function (data) {
         //array of the ajax requests to later use with a .when statement
@@ -25,7 +32,7 @@ function getCafes(){
             var locationsNearBy = new Set();
             locationsNearBy.add(name);
             locationsNearBy.add("Wellington");  //Ssshh #HackFest
-            $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=50', function(surroundingPlaces){
+            $.get(BASE_REQUEST_URL + 'location='+ lat + ',' + long + '&radius=100', function(surroundingPlaces){
               var innerDiv = document.createElement('div');
               innerDiv.className = 'card';
 
@@ -52,12 +59,35 @@ function getCafes(){
 
               innerDiv.appendChild(newDiv);
                 newDiv.appendChild(resultDiv);
+                new google.maps.Marker({
+                  position: {lat: lat, lng: long},
+                  map: map,
+                  icon: iconCoffee
+
+                });
               $('#results').append(innerDiv);
             });
         });
     });
 
 
+}
+
+function initMap() {
+  console.log("working")
+  const flux = {lat:-41.3064632, lng:174.7749782};
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 15,
+    center: flux
+  });
+  var marker = new google.maps.Marker({
+    position: flux,
+    map: map,
+    icon: iconMarker
+  });
+
+
+  getCafes()
 }
 
 function error(msg){
