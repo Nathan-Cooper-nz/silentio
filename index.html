@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
 
     <script type="text/javascript" src="scripts/main.js"></script>
 
@@ -22,14 +23,16 @@
     <div name="Header Area">
       <h1>Silentio - SoT Hackfest 2017</h1>
     </div>
+    <div id='map'>
+    </div>
 
     <div id="results">
       <h3 id="Area">Table Below</h3>
     </div>
   </div>
     <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=***REMOVED***&callback=initMap"></script>
+
   </body>
   <footer>
   </footer>
